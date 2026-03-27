@@ -1,8 +1,8 @@
-import type { AskResponse } from "./types";
+import type { AskResponse, UploadResponse } from "./types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
-export async function uploadDocument(file: File): Promise<Record<string, string>> {
+export async function uploadDocument(file: File): Promise<UploadResponse> {
   const formData = new FormData();
   formData.append("file", file);
 
@@ -12,7 +12,14 @@ export async function uploadDocument(file: File): Promise<Record<string, string>
   });
 
   if (!response.ok) {
-    throw new Error("Upload failed");
+    let errorMessage = "Upload failed";
+    try {
+      const payload = await response.json();
+      errorMessage = payload.detail ?? errorMessage;
+    } catch {
+      // Keep fallback error message.
+    }
+    throw new Error(errorMessage);
   }
 
   return response.json();

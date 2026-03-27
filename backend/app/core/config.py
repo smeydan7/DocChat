@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     chunk_size: int = 900
     chunk_overlap: int = 150
     top_k: int = 5
+    max_upload_mb: int = 20
 
     @property
     def database_url(self) -> str:

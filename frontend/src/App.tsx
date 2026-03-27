@@ -19,9 +19,11 @@ export default function App() {
     setStatus("Uploading document...");
     try {
       const result = await uploadDocument(selectedFile);
-      setStatus(`Upload scaffold reached: ${result.file_name}`);
-    } catch {
-      setStatus("Upload failed. Check backend logs.");
+      setStatus(
+        `Stored ${result.chunk_count} chunks from ${result.file_name} (document id: ${result.document_id}).`
+      );
+    } catch (error: unknown) {
+      setStatus(error instanceof Error ? error.message : "Upload failed. Check backend logs.");
     }
   }
 
@@ -46,7 +48,7 @@ export default function App() {
     <main className="container">
       <h1>Chat with Your Docs</h1>
       <p className="subtitle">
-        First commit groundwork: upload and ask flows are scaffolded.
+        Ingestion pipeline is live: PDF upload now extracts text and stores chunks.
       </p>
 
       <section className="card">

@@ -6,13 +6,13 @@ CREATE TABLE IF NOT EXISTS documents (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Placeholder dimension for text-embedding-3-small.
+-- Embeddings are nullable in commit 2; commit 3 will populate and enforce usage.
 CREATE TABLE IF NOT EXISTS document_chunks (
   id UUID PRIMARY KEY,
   document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
   chunk_index INT NOT NULL,
   chunk_text TEXT NOT NULL,
-  embedding VECTOR(1536) NOT NULL,
+  embedding VECTOR(1536),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

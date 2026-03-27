@@ -5,6 +5,7 @@ pydantic-settings
 sqlalchemy
 psycopg[binary]
 langchain
+langchain-text-splitters
 langchain-openai
 openai
 pypdf2
